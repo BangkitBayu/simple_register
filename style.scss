@@ -25,12 +25,12 @@ body {
             height: 100vh;
             max-height: 500px;
             width: 100vw;
-            max-width: 400px;
+            max-width: 450px;
             display: flex;
             flex-direction: column;
             text-align: center;
-            gap: 1.5rem 1.5rem;
-            padding: 2.5rem 2.5rem;
+            gap: 1rem 1rem;
+            padding: 2rem 2rem;
             box-shadow: $box-shadow;
             border-radius: 20px;
 
@@ -46,60 +46,85 @@ body {
                 justify-content: space-around;
                 align-items: left;
                 flex-direction: column;
-                padding: 1rem 1rem;
+                padding: 1.5rem 1.5rem;
 
                 .form-element {
-                    position: relative;
+                    display: flex;
                     align-items: center;
+                    position: relative;
                     gap: 0.5rem 0.5rem;
 
                     label {
                         i {
-                            font-size: 1.2rem;
-                            font-weight: bold;
+                            margin-inline-end: 0.2rem;
+                            font-size: 1.5rem;
+                            font-weight: 500;
                         }
                     }
 
                     input {
                         width: 100vw;
-                        max-width: 250px;
-                        padding: 0.4rem 0.4rem;
+                        max-width: 350px;
+                        padding: 0.4rem 0.5rem;
                     }
 
                     span {
+                        text-align: left;
                         position: absolute;
                         bottom: -30px;
-                        left: 30px;
+                        left: 2px;
                         font-weight: 500;
                         color: red;
+                        font-size: 1rem;
                     }
-
                 }
 
-                .form-element:last-child {
-                    gap: 0;
-                    display: flex;
-                    flex-direction: column;
+            }
 
-                    button {
-                        padding: 0.6rem 7rem;
-                        background-color: red;
-                        color: white;
-                        font-weight: 600;
-                        border-radius: 10px;
-                        transition: all ease 0.3s;
-                        box-shadow: 0 2px 10px rgba(240, 8, 8, 0.818);
-                        border: none;
-                    }
+            section.form-element {
+                position: relative;
+                top: -18px;
+                // bottom: 25px;
+                display: flex;
+                align-items: center;
 
-                    button:active {
-                        box-shadow: 0 0px 10px rgb(210, 9, 9);
-                        transform: translateY(10px);
-                    }
+                input[type="checkbox"]#showPassword {
+                    width: 20px;
+                }
 
-                    p {
-                        margin-block-end: 5rem;
-                    }
+                p {
+                    position: absolute;
+                    left: 35px;
+                }
+            }
+
+            .form-element:last-child {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+
+                button {
+                    padding: 0.7rem 7rem;
+                    width: 100vw;
+                    max-width: 340px;
+                    background-color: red;
+                    color: white;
+                    font-weight: 600;
+                    border-radius: 10px;
+                    transition: all ease 0.3s;
+                    box-shadow: 0 2px 10px rgba(240, 8, 8, 0.818);
+                    border: none;
+                }
+
+                button:active {
+                    box-shadow: 0 0px 10px rgb(210, 9, 9);
+                    transform: translateY(10px);
+                }
+
+                p {
+                    position: absolute;
+                    top: 55px;
+                    margin-block-end: 5rem;
                 }
             }
         }

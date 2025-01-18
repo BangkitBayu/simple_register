@@ -2,29 +2,25 @@
 include "db/db_connect.php";
 if (isset($_POST['register'])) {
 
-    $email = $_POST['email'];
+    $email =$_POST['email'] ;
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $sanitizeEmail = filter_var($email , FILTER_SANITIZE_EMAIL); //untuk menyaring karakter tertentu yang tidak valid dalam email
+
 
     $sql = "INSERT INTO tb_users (email,username,password) VALUES ('$email','$username','$password')";
 
-    $db->query($sql);
-
-    if (empty($email)) {
-        $email_error = "Please enter the email!";
-    } else if (!preg_match("/[a-zA-Z]*$/" , $email)) {
-        $email_error = "Please enter correct an email!";
+    if (empty($email) &&  empty($username) &&  empty($password)) { //untuk validasi bahwa data tidak boleh kosong
+        echo "Data invalid";
+    } else if(strlen($username) < 5 && strlen($password) < 5 && !filter_var($sanitizeEmail , FILTER_VALIDATE_EMAIL)) {
+        echo "Data invalid";
+    } else {
+        $db->query($sql);
     }
 
-    if (empty($username)) {
-        $username_error = "Please enter the username!";
-    }
+    //filter_validate_email : //untuk memvalidasi apakah email sudah sesuai format 
 
-    if (empty($password)) {
-        $password_error = "Please enter the password!";
-    }
-}
-
+};
 
 ?>
 
@@ -44,7 +40,7 @@ if (isset($_POST['register'])) {
     <main>
         <section class="form-container">
             <h1>Sign Up</h1>
-            <form action="signup.php" method="post">
+            <form action="register.php" method="post">
                 <div class="form-element">
                     <label for="email">
                         <i class="bx bxs-envelope"></i>
@@ -52,11 +48,14 @@ if (isset($_POST['register'])) {
                     <input type="email" id="email" placeholder="Enter email here" name="email">
                     <br>
                     <span>
-                        <?php if (!empty($email_error)) {
-                            echo $email_error;
-                        }
-                        ?>
+                    <?php if (empty($email)) {
+                        echo "Please enter the email";
+                    } else if (!filter_var($sanitizeEmail , FILTER_VALIDATE_EMAIL)) {
+                        echo "Please enter valid email";
+                    }
+                    ?>
                     </span>
+
                 </div> <br> <br>
 
                 <div class="form-element">
@@ -66,8 +65,10 @@ if (isset($_POST['register'])) {
                     <input type="text" id="username" placeholder="Enter username here" name="username">
                     <br>
                     <span>
-                        <?php if (!empty($username_error)) {
-                            echo $username_error;
+                        <?php if (empty($username)) {
+                            echo "Please enter the username";
+                        } else if(strlen($username) < 5) {
+                            echo "username have 5 character minimum";
                         }
                         ?>
                     </span>
@@ -75,28 +76,34 @@ if (isset($_POST['register'])) {
 
                 <div class="form-element">
                     <label for="password">
-                        <i class="bx bx-show"></i>
+                        <i class="bx bxs-key "></i>
                     </label>
                     <input type="password" id="password" placeholder="Enter password here" name="password">
-                    <br>
                     <span>
-                        <?php if (!empty($password_error)) {
-                            echo $password_error;
+                        <?php if (empty($password)) {
+                            echo "Please enter the password";
+                        } else if(strlen($password) < 5) {
+                            echo "Password have 5 character minimum";
                         }
                         ?>
                     </span>
+
                 </div> <br> <br>
+
+                <section class="form-element">
+                    <input type="checkbox" name="showPassword" id="showPassword">
+                    <p>show password</p>
+                </section>
 
                 <div class="form-element">
                     <button type="submit" name="register" id="submitButton">Sign Up</button>
-                    <br>
                     <p>Already have an account? <a href="signin.php">Sign In</a></p>
                 </div>
             </form>
 
         </section>
     </main>
-    <script src="script/validate.js"></script>
+    <script src="script/main.js"></script>
 </body>
 
 </html>
