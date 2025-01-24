@@ -1,25 +1,25 @@
 <?php
 include "db/db_connect.php";
-if (isset($_POST['register'])) {
+if(isset($_POST['register'])) {
 
-    $email =$_POST['email'] ;
+    $email = $_POST['email'];
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $sanitizeEmail = filter_var($email , FILTER_SANITIZE_EMAIL); //untuk menyaring karakter tertentu yang tidak valid dalam email
+    $sanitizeEmail = filter_var($email, FILTER_SANITIZE_EMAIL); //untuk menyaring karakter tertentu yang tidak valid dalam email )
+
 
 
     $sql = "INSERT INTO tb_users (email,username,password) VALUES ('$email','$username','$password')";
 
     if (empty($email) &&  empty($username) &&  empty($password)) { //untuk validasi bahwa data tidak boleh kosong
         echo "Data invalid";
-    } else if(strlen($username) < 5 && strlen($password) < 5 && !filter_var($sanitizeEmail , FILTER_VALIDATE_EMAIL)) {
+    } else if (strlen($username) < 5 && strlen($password) < 5 && !filter_var($sanitizeEmail, FILTER_VALIDATE_EMAIL)) {
         echo "Data invalid";
     } else {
         $db->query($sql);
-    }
+    };
 
     //filter_validate_email : //untuk memvalidasi apakah email sudah sesuai format 
-
 };
 
 ?>
@@ -40,22 +40,14 @@ if (isset($_POST['register'])) {
     <main>
         <section class="form-container">
             <h1>Sign Up</h1>
-            <form action="register.php" method="post">
+            <form action="register.php" method="post" id="form" autocomplete="off">
                 <div class="form-element">
                     <label for="email">
                         <i class="bx bxs-envelope"></i>
                     </label>
                     <input type="email" id="email" placeholder="Enter email here" name="email">
                     <br>
-                    <span>
-                    <?php if (empty($email)) {
-                        echo "Please enter the email";
-                    } else if (!filter_var($sanitizeEmail , FILTER_VALIDATE_EMAIL)) {
-                        echo "Please enter valid email";
-                    }
-                    ?>
-                    </span>
-
+                    <span id="email_error"></span>
                 </div> <br> <br>
 
                 <div class="form-element">
@@ -64,14 +56,7 @@ if (isset($_POST['register'])) {
                     </label>
                     <input type="text" id="username" placeholder="Enter username here" name="username">
                     <br>
-                    <span>
-                        <?php if (empty($username)) {
-                            echo "Please enter the username";
-                        } else if(strlen($username) < 5) {
-                            echo "username have 5 character minimum";
-                        }
-                        ?>
-                    </span>
+                    <span id="username_error"></span>
                 </div> <br> <br>
 
                 <div class="form-element">
@@ -79,15 +64,7 @@ if (isset($_POST['register'])) {
                         <i class="bx bxs-key "></i>
                     </label>
                     <input type="password" id="password" placeholder="Enter password here" name="password">
-                    <span>
-                        <?php if (empty($password)) {
-                            echo "Please enter the password";
-                        } else if(strlen($password) < 5) {
-                            echo "Password have 5 character minimum";
-                        }
-                        ?>
-                    </span>
-
+                    <span id="password_error"></span>
                 </div> <br> <br>
 
                 <section class="form-element">
@@ -97,7 +74,7 @@ if (isset($_POST['register'])) {
 
                 <div class="form-element">
                     <button type="submit" name="register" id="submitButton">Sign Up</button>
-                    <p>Already have an account? <a href="signin.php">Sign In</a></p>
+                    <p>Already have an account? <a href="login.php">Sign In</a></p>
                 </div>
             </form>
 
@@ -107,3 +84,10 @@ if (isset($_POST['register'])) {
 </body>
 
 </html>
+
+<?php if (empty($email)) {
+    echo "Please enter the email";
+} else if (!filter_var($sanitizeEmail, FILTER_VALIDATE_EMAIL)) {
+    echo "Please enter valid email";
+}
+?>
